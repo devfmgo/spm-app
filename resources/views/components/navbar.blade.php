@@ -9,6 +9,7 @@
                         <img class="block lg:hidden h-12" src="{{ asset('images/Logo-NF.png') }}" alt="Logo">
                         <img class="hidden lg:block h-12 w-auto" src="{{ asset('images/Logo-NF.png') }}" alt="Logo">
                     </a>
+
                     <div class="hidden lg:block lg:ml-2">
                         <div class="flex">
                             <a href="/"
