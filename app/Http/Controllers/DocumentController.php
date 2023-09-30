@@ -8,7 +8,9 @@ use App\Models\Document;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use finfo;
 
+$finfo = new finfo(FILEINFO_MIME_TYPE);
 
 class DocumentController extends Controller
 {
@@ -24,11 +26,11 @@ class DocumentController extends Controller
         $types = Type::all();
         $countDocument = Document::all();
         $limit = 12;
-        // filter all data 
+        // filter all data
         if ($countDocument) {
             $documents = Document::with('unit', 'type')->latest()->paginate($limit);
         }
-        // filter berdasarkan unit 
+        // filter berdasarkan unit
         if (request('uid') > 1) {
             $documents = Document::with('unit', 'type')->where('unit_id', request('uid'))->latest()->paginate($limit);
         }
@@ -107,7 +109,7 @@ class DocumentController extends Controller
 
         return view('pages.document.add-document', compact('units', 'types'));
     }
-    // function set folder 
+    // function set folder
     public function folder($type)
     {
         if ($type == 1) {
@@ -228,11 +230,10 @@ class DocumentController extends Controller
         Document::find($id)->delete();
         return redirect()->route('data-document', 'all');
     }
-
     public function deleteAll($id)
     {
 
-        // script for delete data with file 
+        // script for delete data with file
         $document = Document::with('type')->onlyTrashed()->find($id);
         $folder = $document->type->name;
         $file  = $document->file_doc;
@@ -244,8 +245,7 @@ class DocumentController extends Controller
             'all'
         );
     }
-
-    //  function restore or delete data permanent 
+    //  function restore or delete data permanent
     public function restoreDelete($act, $id)
     {
         if ($act == "restore") {
@@ -253,7 +253,7 @@ class DocumentController extends Controller
             return redirect()->route('data-document', 'all');
         }
         // else {
-        //     // script for delete data with file 
+        //     // script for delete data with file
         //     $document = Document::with('type')->where('id', $id)->first();
         //     $folder = $document->type->name;
         //     $file  = $document->file_doc;

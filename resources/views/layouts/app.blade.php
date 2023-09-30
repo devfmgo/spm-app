@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{asset('images/logonf.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/logonf.png') }}" type="image/x-icon">
     <title>@yield('title')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
     @vite('resources/css/app.css')
 
@@ -27,5 +27,28 @@
     </div>
 </body>
 <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        const color = document.getElementById("warna").value;
+        if (color === "") {
+            document.getElementById("panelWarna").style.backgroundColor = "#000";
+        } else {
+            document.getElementById("panelWarna").style.backgroundColor = `${color}`;
+        }
+        // ketika warna diubah
+        $("#warna").change(function() {
+            const color = document.getElementById("warna").value;
+            if (color === "") {
+                document.getElementById("panelWarna").style.backgroundColor = "#000";
+            } else {
+                document.getElementById("panelWarna").style.backgroundColor = `${color}`;
+            }
+
+
+        })
+
+    });
+</script>
 
 </html>

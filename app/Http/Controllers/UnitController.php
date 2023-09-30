@@ -14,7 +14,7 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $units = Unit::all();
+        $units = Unit::paginate(10);
         return view('pages.unit.index', compact('units'));
     }
 
@@ -25,6 +25,7 @@ class UnitController extends Controller
      */
     public function create()
     {
+
         return view('pages.unit.create');
     }
 
@@ -36,9 +37,20 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required'
+        ]);
 
+        $data = new Unit();
+        $data->name = $request->name;
+        $data->color = $request->color;
+        if ($data->save()) {
+            toastr()->success('Data Succes Save', 'Success');
+            return redirect()->route('index-unit');
+        }
+        return back();
+    }
     /**
      * Display the specified resource.
      *
@@ -58,7 +70,8 @@ class UnitController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $data = Unit::find($id);
+        return view('pages.unit.edit', compact('data'));
     }
 
     /**
@@ -70,7 +83,19 @@ class UnitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required'
+        ]);
+
+        $data = Unit::find($id);
+        $data->name = $request->name;
+        $data->color = $request->color;
+        if ($data->update($request->all())) {
+            toastr()->success('Data Succes Update', 'Success');
+            return redirect()->route('index-unit');
+        }
+        return back();
     }
 
     /**
@@ -81,6 +106,11 @@ class UnitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Unit::find($id);
+        if ($data->delete()) {
+            toastr()->success('Data Succes Deleted', 'Success');
+            return redirect()->route('index-unit');
+        }
+        return back();
     }
 }

@@ -23,11 +23,6 @@ Route::get('/', function () {
 });
 
 
-Route::controller(UnitController::class)->group(function () {
-    Route::get('unit', 'index')->name('index-unit');
-    Route::get('create-unit', 'create')->name('create-unit');
-    Route::get('unit/{id}', 'edit')->name('edit-unit');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -42,7 +37,7 @@ Route::get('document', [DocumentController::class, 'index'])->name('index-docume
 
 
 Route::middleware([IsAdmin::class])->group(function () {
-    // Router User Controller 
+    // Router User Controller
     Route::controller(UserController::class)->group(function () {
         Route::get('users', 'index')->name('users');
         Route::get('/users/{id}', 'edit')->name('users.edit');
@@ -53,9 +48,9 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::get('/user/{id}', 'empty')->name('users.empty');
     });
 
-    //Document Controller 
+    //Document Controller
     Route::controller(DocumentController::class)->group(function () {
-        // Route::get('document', 'index')->name('index-document');
+
         Route::get('data-document/{id}', 'document_data')->name('data-document');
         Route::get('data-document/filter/{id}', 'filter')->name('filter');
         Route::get('search', 'search_document')->name('search-document');
@@ -79,6 +74,15 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::delete('delete/{id}', 'destroy')->name('delete');
         Route::get('deleteAll/{id}', 'deleteAll')->name('deleteAll');
     });
+
+    Route::controller(UnitController::class)->group(function () {
+        Route::get('unit', 'index')->name('index-unit');
+        Route::get('create-unit', 'create')->name('create-unit');
+        Route::post('save-unit', 'store')->name('save-unit');
+        Route::get('unit/{id}', 'edit')->name('edit-unit');
+        Route::put('edit/{id}', 'update')->name('update-unit');
+        Route::delete('unit/{id}', 'destroy')->name('delete-unit');
+    });
 });
 Route::get('/clear-cache', function () {
     Artisan::call('cache:clear');
@@ -86,6 +90,13 @@ Route::get('/clear-cache', function () {
     Artisan::call('config:cache');
     Artisan::call('view:clear');
     return 'View cache has been cleared';
+});
+
+Route::get('/reset', function () {
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
 });
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');
