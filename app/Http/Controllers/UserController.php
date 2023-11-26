@@ -103,7 +103,7 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        if (User::withTrashed()->where('id', $id)->restore()); {
+        if (User::withTrashed()->where('id', $id)->restore()) {
             toastr()->success('Data Succes Resore', 'Success');
             return redirect()->route('users');
         }
