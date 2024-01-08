@@ -30,19 +30,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        const color = document.getElementById("warna").value;
-        if (color === "") {
-            document.getElementById("panelWarna").style.backgroundColor = "#000";
-        } else {
+        let color = document.getElementById("warna").value;
+        if (color != null) {
             document.getElementById("panelWarna").style.backgroundColor = `${color}`;
+        } else {
+
+            document.getElementById("panelWarna").style.backgroundColor = "#000";
         }
         // ketika warna diubah
         $("#warna").change(function() {
-            const color = document.getElementById("warna").value;
-            if (color === "") {
-                document.getElementById("panelWarna").style.backgroundColor = "#000";
-            } else {
+            let color = document.getElementById("warna").value;
+            if (color != null) {
                 document.getElementById("panelWarna").style.backgroundColor = `${color}`;
+            } else {
+
+                document.getElementById("panelWarna").style.backgroundColor = "#000";
             }
 
 

@@ -55,7 +55,6 @@ class DocumentController extends Controller
     public function document_data()
     {
 
-
         if (request('id') == null) {
             $documents = Document::with('unit', 'type')->paginate(10);
         } elseif (request('id') == "all") {
@@ -70,7 +69,7 @@ class DocumentController extends Controller
         $result = 0;
         return view('pages.document.data-document', compact('documents', 'softDelete', 'request', 'unit', 'result'));
     }
-
+    /** Filter softDelete */
     public function filter($id)
     {
         $idFilter = explode(',', $id);
@@ -134,6 +133,7 @@ class DocumentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /** Store data document kedalam aplikasi */
     public function store(Request $request)
     {
         $request->validate([

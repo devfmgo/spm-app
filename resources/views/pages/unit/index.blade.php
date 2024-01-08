@@ -58,8 +58,6 @@
                                 </td>
                                 <td
                                     class=" flex  space-x-1 border-t-0 px-6 align-center border-l-0 border-r-0 whitespace-nowrap p-4">
-
-
                                     <a href="{{ route('edit-unit', $unit->id) }}"
                                         class="flex text-gray-600 bg-yellow-300 p-2 rounded-full text-sm"><svg
                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
