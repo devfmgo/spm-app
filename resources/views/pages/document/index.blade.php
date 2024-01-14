@@ -65,17 +65,33 @@
                     <h3 class="font-semibold my-4 flex-1">{{ $document->title }}</h3>
 
                     <div class=" relative space-x-1 my-10 m-auto mt-2">
+                        {{-- valdasi user view dokumen --}}
+                        @auth
+                            @php
+                                if (Auth::user()->is_admin == 1) {
+                                    $view = 'admin-view';
+                                } elseif (Auth::user()->is_admin == 2) {
+                                    $view = 'super-view';
+                                } else {
+                                    $view = 'user-view';
+                                }
+                            @endphp
+
+                        @endauth
+
                         @auth
                             <div class="flex justify-center  space-x-2">
-                                <a href="{{ route('view', $document->slug) }}"
+                                <a href="{{ route($view, $document->slug) }}"
                                     class="bg-yellow-300
                     hover:text-gray-500 p-2 rounded-full w-32 shadow-sm font-semibold text-sm ">
                                     View
                                 </a>
+                                @if (Auth::user()->is_admin != 0)
+                                    <a href="{{ route(Auth::user()->is_admin == 1 ? 'download-admin' : 'download-document', $document->slug) }}"
+                                        class="bg-blue-200 p-2 rounded-full w-32 font-semibold">
+                                        Download</a>
+                                @endif
 
-                                <a href="{{ route('download', $document->slug) }}"
-                                    class="bg-blue-200 p-2 rounded-full w-32 font-semibold">
-                                    Download</a>
                             </div>
 
                         @endauth

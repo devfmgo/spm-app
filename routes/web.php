@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Middleware\User;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\SuperUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
-use App\Http\Middleware\IsAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Middleware\IsAdmin;
 */
 
 Route::get('/', function () {
-    return view('welcome')->name('main');
+    return view('welcome');
 });
 
 
@@ -34,8 +36,7 @@ Route::controller(TypeController::class)->group(function () {
 
 //View Document Only
 Route::get('document', [DocumentController::class, 'index'])->name('index-document');
-
-
+// Admin
 Route::middleware([IsAdmin::class])->group(function () {
     // Router User Controller
     Route::controller(UserController::class)->group(function () {
@@ -58,10 +59,8 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::get('act/{act}/{id}', 'restoreDelete')->name('resdel');
         Route::get('act/{id}', 'deleteAll')->name('permanent-delete');
         Route::post('save-document', 'store')->name('save-document');
-        Route::get('download/{slug}', function () {
-            return "Download Page";
-        })->name('download');
-        Route::get('view/{slug}', 'show')->name('view');
+        Route::get('download-admin/{slug}', 'downloadDocument')->name('download-admin');
+        Route::get('admin-view/{slug}', 'show')->name('admin-view');
         Route::get(
             'document/{id}',
             'edit'
@@ -82,6 +81,28 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::get('unit/{id}', 'edit')->name('edit-unit');
         Route::put('edit/{id}', 'update')->name('update-unit');
         Route::delete('unit/{id}', 'destroy')->name('delete-unit');
+    });
+});
+
+// SuperUser
+Route::middleware([SuperUser::class])->group(function () {
+    //Document Controller
+    Route::controller(DocumentController::class)->group(function () {
+        Route::get('super-view/{slug}', 'show')->name('super-view');
+        Route::get('download-document/{slug}', 'downloadDocument')->name('download-document');
+    });
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
+});
+// User
+Route::middleware([User::class])->group(function () {
+    //Document Controller
+    Route::controller(DocumentController::class)->group(function () {
+        Route::get('user-view/{slug}', 'show')->name('user-view');
+    });
+    Route::get('/dashboard', function () {
+        return view('dashboard');
     });
 });
 Route::get('/clear-cache', function () {

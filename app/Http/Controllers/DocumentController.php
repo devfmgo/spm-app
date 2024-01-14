@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use finfo;
 use App\Models\Type;
 use App\Models\Unit;
 use App\Models\Document;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use finfo;
+
 
 $finfo = new finfo(FILEINFO_MIME_TYPE);
 
@@ -48,7 +50,6 @@ class DocumentController extends Controller
         if (request('search')) {
             $documents = Document::with('unit', 'type')->where('title', 'LIKE', '%' . request('search') . '%')->latest()->paginate($limit);
         }
-
         return view('pages.document.index', compact('documents', 'units', 'types'));
     }
     /** Data Document **/
@@ -111,21 +112,23 @@ class DocumentController extends Controller
     // function set folder
     public function folder($type)
     {
-        if ($type == 1) {
-            return 'Pedoman';
-        }
-        if ($type == 2) {
-            return 'Panduan';
-        }
-        if ($type == 3) {
-            return 'Prosedur';
-        }
-        if ($type == 4) {
-            return 'IK';
-        }
-        if ($type == 5) {
-            return 'Format';
-        }
+        $typesDocument = Type::find($type);
+        return $typesDocument->name;
+        // if ($type == 1) {
+        //     return 'Learning Policy';
+        // }
+        // if ($type == 2) {
+        //     return 'Panduan';
+        // }
+        // if ($type == 3) {
+        //     return 'Prosedur';
+        // }
+        // if ($type == 4) {
+        //     return 'IK';
+        // }
+        // if ($type == 5) {
+        //     return 'Format';
+        // }
     }
     /**
      * Store a newly created resource in storage.
@@ -263,5 +266,13 @@ class DocumentController extends Controller
         //     return redirect()->route('data-document', 'all');
         // }
         return redirect()->route('data-document', 'all');
+    }
+    // download document
+    public function downloadDocument(Request $request, $slug)
+    {
+        $documents = Document::where('slug', $slug)->first();
+        $url = Storage::url($documents->type->name . '/');
+        $path = public_path($url . $documents->file_doc);
+        return response()->download($path);
     }
 }

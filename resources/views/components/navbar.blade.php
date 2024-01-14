@@ -30,7 +30,7 @@
                                 </svg>
                                 Document SPM</a>
                             @auth
-                                @if (Auth::user()->is_admin)
+                                @if (Auth::user()->is_admin == 1)
                                     <a href="{{ route('data-document', 'all') }}"
                                         class="{{ Request::path() == 'data-document/all' ? 'active' : '' }} ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800 font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700 flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -61,6 +61,8 @@
                                                 d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                                         </svg> User Accounts</a>
                                 @endif
+                                {{-- @if (Auth::user()->is_admin == 2)
+                                @endif --}}
                             @endauth
 
                         </div>
@@ -137,18 +139,10 @@
                             d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-1.883-2.542m-16.5 0V6A2.25 2.25 0 016 3.75h3.879a1.5 1.5 0 011.06.44l2.122 2.12a1.5 1.5 0 001.06.44H18A2.25 2.25 0 0120.25 9v.776" />
                     </svg>
                     Document SPM</a>
-                <a href="{{ route('login') }}"
-                    class="flex items-center ml-4 px-3 py-2 rounded-md text-sm leading-5  text-blue-800
-                    font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out
-                    cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6 mr-1">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                    </svg>
-                    Login</a>
+
+
                 @auth
-                    @if (Auth::user()->is_admin)
+                    @if (Auth::user()->is_admin == 1)
                         <a href="{{ route('data-document', 'all') }}"
                             class="{{ Request::path() == 'data-document/all' ? 'active' : '' }} ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800 font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700 flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -177,22 +171,25 @@
                                     d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                             </svg> User Accounts</a>
                     @endif
-                    <span
-                        class="ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800 font-semibold">{{ Auth::user()->name }}</span>
-                    <a href="#"
-                        class="flex ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800
-                                            font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out
-                                            cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Log Out <svg
-                            fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9">
-                            </path>
-                        </svg></a>
-                    <form action="{{ route('logout') }}" id="logout-form" method="post" style="display: none">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    </form>
+                    <div class="flex justify-between items-center">
+
+                        <span
+                            class="ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800 font-semibold">{{ Auth::user()->name }}</span>
+                        <a href="#"
+                            class="flex ml-4 px-3 py-2 rounded-md text-sm leading-5  text-gray-800
+                                                font-semibold hover:bg-yellow-500 hover:text-white transition duration-150 ease-in-out
+                                                cursor-pointer focus:outline-none focus:text-white focus:bg-gray-700"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Log Out <svg
+                                fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="w-6 h-6 mr-1">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9">
+                                </path>
+                            </svg></a>
+                        <form action="{{ route('logout') }}" id="logout-form" method="post" style="display: none">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        </form>
+                    </div>
                 @endauth
             </div>
         </div>

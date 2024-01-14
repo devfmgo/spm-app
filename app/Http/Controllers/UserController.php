@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
@@ -79,7 +81,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (User::find($id)->update($request->all())) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'is_admin' => ['required']
+        ]);
+        $user = $request->all();
+        $user['name'] = $request->name;
+        $user['email'] = $request->email;
+        $user['password'] = Hash::make($request->password);
+        $user['is_admin'] = $request->is_admin;
+        dd($user);
+        if (User::find($id)->update($user)) {
             toastr()->success('Data Succes Updated', 'Success');
             return redirect()->route('users');
         }
