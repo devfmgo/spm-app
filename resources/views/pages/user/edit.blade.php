@@ -2,11 +2,9 @@
 @section('title', 'SPM| Update User')
 @section('content')
 
-
     <div class="m-auto w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
         <h1 class="text-center text-2xl font-semibold mb-4">Edit User</h1>
         <!-- Validation Errors -->
-
 
         <form method="POST" action="{{ route('users.update', $data->id) }}">
             @csrf

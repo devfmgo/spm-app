@@ -92,7 +92,6 @@ class UserController extends Controller
         $user['email'] = $request->email;
         $user['password'] = Hash::make($request->password);
         $user['is_admin'] = $request->is_admin;
-        dd($user);
         if (User::find($id)->update($user)) {
             toastr()->success('Data Succes Updated', 'Success');
             return redirect()->route('users');
