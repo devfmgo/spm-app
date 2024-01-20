@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Imports\UserImport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class UserController extends Controller
 {
@@ -117,7 +122,7 @@ class UserController extends Controller
     public function restore($id)
     {
         if (User::withTrashed()->where('id', $id)->restore()) {
-            toastr()->success('Data Succes Resore', 'Success');
+            toastr()->success('Data Success Restore', 'Success');
             return redirect()->route('users');
         }
         return back();
@@ -126,8 +131,47 @@ class UserController extends Controller
     public function empty($id)
     {
         if (User::where('id', $id)->forceDelete()) {
-            toastr()->success('Data Succes Delete', 'Success');
+            toastr()->success('Data Success Delete', 'Success');
             return redirect()->route('users');
         }
+    }
+    public function importUser()
+    {
+        return view('pages.user.import');
+    }
+    public function ImportUserProccess(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        // menangkap file excel
+        $file = $request->file('file');
+
+        // membuat nama file unik
+        $nama_file = $file->hashName();
+
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new UserImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+        if ($import) {
+            toastr()->success('Data Succes Delete', 'Success');
+        }
+
+        // alihkan halaman kembali
+        return redirect('/users');
+    }
+
+    public function downloadFormatExcel()
+    {
+        $url = Storage::url('excel/');
+        $path = public_path($url . 'Format_Import.xlsx');
+        return response()->download($path);
     }
 }

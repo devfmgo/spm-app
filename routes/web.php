@@ -47,6 +47,9 @@ Route::middleware([IsAdmin::class])->group(function () {
         Route::get('/restore/{id}', 'restore')->name('users.restore');
         Route::get('user/trash', 'trash')->name('users.trash');
         Route::get('/user/{id}', 'empty')->name('users.empty');
+        Route::get('/importpage', 'ImportUser')->name('user.importpage');
+        Route::post('/importdata', 'ImportUserProccess');
+        Route::get('/downloadformat', 'downloadFormatExcel')->name('user.formatimport');
     });
 
     //Document Controller
