@@ -76,11 +76,16 @@
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 ">
 
-                                    @if ($user->is_admin)
+                                    @if ($user->is_admin==1)
                                         <div
                                             class=" text-gray-600 bg-green-300 text-xs p-2 rounded-full font-semibold w-28 text-center">
                                             Administrator</div>
-                                    @else
+                                    @elseif($user->is_admin==2)
+                                        <div
+                                            class=" text-gray-600 bg-yellow-300 text-xs p-2 rounded-full font-semibold w-28 text-center">
+                                            Super User
+                                        </div>
+                                        @else
                                         <div
                                             class=" text-gray-600 bg-indigo-300 text-xs p-2 rounded-full font-semibold w-28 text-center">
                                             User
