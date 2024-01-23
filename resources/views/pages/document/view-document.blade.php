@@ -19,12 +19,8 @@
                 <iframe
                     src="{{ Storage::url($documents->type->name . '/' . $documents->file_doc) }}#toolbar=0&navpanes=0&scrollbar=0"
                    class="m-auto shadow-sm w-full" height="750"></iframe>
-
             </div>
-            {{-- <div id="defaultView">
-            <embed src="{{ Storage::url('Default.pdf') }}#toolbar=0&navpanes=0&scrollbar=0" width="800" height="1040"
-                class="m-auto shadow-sm">
-        </div> --}}
+
         </div>
     @endsection
 

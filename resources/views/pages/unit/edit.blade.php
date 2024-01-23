@@ -42,3 +42,7 @@
         </div>
     </div>
 @endsection
+
+@push('custom-script')
+    @vite('resources/js/custom.js')
+@endpush

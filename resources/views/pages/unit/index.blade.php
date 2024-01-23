@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'SPM | Unit/Biro')
 @section('content')
+
     <div class="w-full xl:w-11/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
             <div class="rounded-t mb-0 px-4 py-3 border-0">
@@ -93,4 +94,6 @@
         </div>
         {{ $units->links('pagination::tailwind') }}
     </div>
+
 @endsection
+

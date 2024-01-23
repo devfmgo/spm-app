@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Imports\UserImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,9 +22,17 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        $users = User::paginate(10);
+        $limit = 10;
+        $viewusers = User::all();
         $delete = User::onlyTrashed()->count();
+        if ($viewusers){
+            $users = User::paginate($limit);
+        }
+
+        if (request('search')){
+           $users = User::where('name','LIKE','%'.request('search').'%')->orWhere('email','LIKE','%'.request('search').'%')->latest()->paginate($limit);
+        }
+
         return view('pages.user.index', compact('users', 'delete'));
     }
 

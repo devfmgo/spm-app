@@ -11,10 +11,12 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-
     @vite('resources/css/app.css')
-
-</head>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @section('script')
+        @vite('resources/js/flowbite.js')
+    @endsection
+        </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen">
@@ -26,31 +28,8 @@
         </footer>
     </div>
 </body>
-<script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        let color = document.getElementById("warna").value;
-        if (color != null) {
-            document.getElementById("panelWarna").style.backgroundColor = `${color}`;
-        } else {
 
-            document.getElementById("panelWarna").style.backgroundColor = "#000";
-        }
-        // ketika warna diubah
-        $("#warna").change(function() {
-            let color = document.getElementById("warna").value;
-            if (color != null) {
-                document.getElementById("panelWarna").style.backgroundColor = `${color}`;
-            } else {
-
-                document.getElementById("panelWarna").style.backgroundColor = "#000";
-            }
-
-
-        })
-
-    });
-</script>
-
+{{--<script src="{{asset('resources/js/flowbite.js')}}"></script>--}}
+{{--<script src="{{asset('resources/js/Jquery3.6.4.js')}}"></script>--}}
+@stack('custom-script')
 </html>
