@@ -36,6 +36,7 @@ Route::controller(TypeController::class)->group(function () {
 
 //View Document Only
 Route::get('document', [DocumentController::class, 'index'])->name('index-document');
+
 // Admin
 Route::middleware([IsAdmin::class])->group(function () {
     // Router User Controller
