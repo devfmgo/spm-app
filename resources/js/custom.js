@@ -26,9 +26,9 @@ function getValue() {
 
     let result = [];
 
-    for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            result.push(checkboxes[i].value);
+    for (const element of checkboxes) {
+        if (element.checked) {
+            result.push(element.value);
         }
     }
     let id = result;

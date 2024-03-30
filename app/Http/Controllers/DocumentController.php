@@ -114,21 +114,6 @@ class DocumentController extends Controller
     {
         $typesDocument = Type::find($type);
         return $typesDocument->name;
-        // if ($type == 1) {
-        //     return 'Learning Policy';
-        // }
-        // if ($type == 2) {
-        //     return 'Panduan';
-        // }
-        // if ($type == 3) {
-        //     return 'Prosedur';
-        // }
-        // if ($type == 4) {
-        //     return 'IK';
-        // }
-        // if ($type == 5) {
-        //     return 'Format';
-        // }
     }
     /**
      * Store a newly created resource in storage.
@@ -255,16 +240,6 @@ class DocumentController extends Controller
             Document::withTrashed()->where('id', $id)->restore();
             return redirect()->route('data-document', 'all');
         }
-        // else {
-        //     // script for delete data with file
-        //     $document = Document::with('type')->where('id', $id)->first();
-        //     $folder = $document->type->name;
-        //     $file  = $document->file_doc;
-        //     Storage::disk('public')->delete($folder . '/' . $file);
-        //     //Delete Permanent
-        //     Document::where('id', $id)->forceDelete();
-        //     return redirect()->route('data-document', 'all');
-        // }
         return redirect()->route('data-document', 'all');
     }
     // download document
