@@ -181,24 +181,39 @@ class DocumentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'file' => 'required|mimes:pdf|max:3000',
+            'file' => 'mimes:pdf|max:3000',
             'title' => 'required',
             'unit_id' => 'required',
             'type_id' => 'required'
         ]);
-        $uploadedFile = $request->file;
-        $filename = $request->unit_id . "_" . $request->type_id . "_" . $request->title . "." . $request->file('file')->getClientOriginalExtension();
-        $simpan = $uploadedFile->storeAs('public/' . $this->folder($request->type_id), $filename);
-        $data = new Document();
-        $data->title = $request->title;
-        $data->unit_id = $request->unit_id;
-        $data->type_id = $request->type_id;
-        $data->slug = Str::slug($request->title);
-        $data->file_doc = $filename;
-        if (Document::find($id)->update($request->all())) {
-            // toastr()->success('Data has been update success!');
-            return redirect('document');
+
+        if ($request->hasFile('file')) {
+            $uploadedFile = $request->file;
+            $filename = $request->unit_id . "_" . $request->type_id . "_" . $request->title . "." . $request->file('file')->getClientOriginalExtension();
+            $simpan = $uploadedFile->storeAs('public/' . $this->folder($request->type_id), $filename);
+            $data = Document::find($id);
+            $data->title = $request->title;
+            $data->unit_id = $request->unit_id;
+            $data->type_id = $request->type_id;
+            $data->slug = Str::slug($request->title);
+            $data->file_doc = $filename;
+            if ($data->update($request->all())) {
+                toastr()->success('Success', 'Data has been update Success!');
+                return redirect('data-document/all');
+            }
+        } else {
+            // dd('without file');
+            $data = Document::find($id);
+            $data->title = $request->title;
+            $data->unit_id = $request->unit_id;
+            $data->type_id = $request->type_id;
+            $data->slug = Str::slug($request->title);
+            if ($data->update($request->all())) {
+                toastr()->success('Success', 'Data has been update Success!');
+                return redirect('data-document/all');
+            }
         }
+
         return back();
     }
 
